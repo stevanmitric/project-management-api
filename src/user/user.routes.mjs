@@ -8,11 +8,9 @@ import {
   update,
 } from './user.controller.mjs';
 
-import { verifyToken } from '../middleware/authentication.mjs';
-
 const router = express.Router();
 
-router.use(verifyToken);
+// router.use(verifyToken);
 
 router.route('/register').post(register);
 
