@@ -40,7 +40,12 @@ dotenv.config();
 
 app.use(express.json());
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://project-management-api-ijrd.onrender.com',
+};
+
+// Apply CORS middleware with options
+app.use(cors(corsOptions));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
