@@ -12,8 +12,6 @@ export async function getAll(req, res) {
 
 export async function post(req, res) {
   try {
-    console.log('added');
-
     const { title, description, dueDate } = req.body;
 
     const newProject = new Project({

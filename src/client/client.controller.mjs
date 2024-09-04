@@ -36,8 +36,6 @@ export async function post(req, res) {
   try {
     const data = req.body;
 
-    console.log('DAta', data);
-
     const client = new Client({
       ...data,
     });
@@ -46,6 +44,8 @@ export async function post(req, res) {
 
     return res.status(201).json({ message: 'Client created successfully.' });
   } catch (error) {
+    console.log(error);
+
     return res.status(500).json({ message: error });
   }
 }

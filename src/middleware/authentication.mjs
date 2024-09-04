@@ -8,7 +8,7 @@ export const generateToken = user => {
   return jwt.sign(
     { id: user.id, email: user.email },
     `${process.env.JWT_SECRET_KEY}`,
-    { expiresIn: '1h' } // Token will expire in 1 hour
+    { expiresIn: '24h' } // Token will expire in 24 hour
   );
 };
 

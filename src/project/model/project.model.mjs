@@ -7,6 +7,8 @@ const projectSchema = new Schema(
     title: { type: String },
     description: { type: String },
     dueDate: { type: Date },
+    clientId: { type: mongoose.Types.ObjectId, ref: 'Client' },
+    createdBy: { type: mongoose.Types.ObjectId, ref: 'User' },
     type: {
       type: String,
       enum: [

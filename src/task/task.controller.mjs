@@ -72,15 +72,13 @@ export async function update(req, res) {
   try {
     const { id } = req.params;
 
-    console.log('id', id);
-
     if (!id || id.length !== 24) {
       return res.status(401).json({ message: 'Wrong id format.' });
     }
 
     const { task } = req.body;
 
-    const dueDate = new Date(task.dueDate);
+    // const dueDate = task.dueDate ? new Date(task.dueDate) : null;
 
     const newList = await TaskList.findOne({ title: task.status });
 
@@ -93,12 +91,14 @@ export async function update(req, res) {
         projectId: task.projectId,
         listId: newList._id,
         reporter: task.reporter,
-        dueDate: dueDate,
+        // dueDate: dueDate,
       }
     );
 
     return res.status(200).json({ message: 'Task updated successfully.' });
   } catch (error) {
+    console.log('error task update', error);
+
     return res.status(500).json({ message: error });
   }
 }
@@ -106,8 +106,6 @@ export async function update(req, res) {
 export async function deleteById(req, res) {
   try {
     const { id } = req.params;
-
-    console.log('id', id);
 
     if (!id || id.length !== 24) {
       return res.status(401).json({ message: 'Wrong id format.' });

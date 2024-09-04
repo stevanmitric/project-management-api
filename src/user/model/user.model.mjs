@@ -13,10 +13,12 @@ const userSchema = new Schema(
       enum: ['In Progress', 'On Hold', 'Done'],
       default: 'On Hold',
     },
-    role: {
-      type: String,
-      enum: ['Admin', 'Developer', 'Manager'],
-    },
+    role: [
+      {
+        type: String,
+        enum: ['Admin', 'Developer', 'Manager'],
+      },
+    ],
   },
   {
     timestamps: true,

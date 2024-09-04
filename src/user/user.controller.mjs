@@ -11,7 +11,7 @@ export async function login(req, res) {
 
     const user = await User.findOne({ email });
 
-    if (!user) return res.status(401).json({ message: 'User not found.' });
+    if (!user) return res.status(404).json({ message: 'User not found.' });
 
     const passwordCheck = await comparePassword(password, user.password);
 
@@ -34,8 +34,6 @@ export async function login(req, res) {
 
 export async function register(req, res) {
   try {
-    console.log('req.body register', req.body);
-
     const { firstName, lastName, email, password, confirmPassword } = req.body;
 
     const user = await User.findOne({ email: email });
