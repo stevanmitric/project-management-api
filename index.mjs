@@ -41,10 +41,12 @@ dotenv.config();
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'https://project-management-api-ijrd.onrender.com',
+  origin: 'https://project-management-dashboard-iplr.onrender.com', // Your frontend origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Include cookies or other credentials if necessary
+  optionsSuccessStatus: 200,
 };
 
-// Apply CORS middleware with options
 app.use(cors(corsOptions));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
