@@ -19,7 +19,7 @@ const options = {
       description: 'API documentation for RESTful API for managing Projects.',
     },
   },
-  apis: ['./routes/task/task.routes.mjs', './routes/user/user.routes.mjs'], // Path to the API routes
+  apis: ['./routes/user/user.routes.mjs', './src/task/task.routes.mjs'],
 };
 
 const specs = swaggerJsdoc(options);
@@ -41,10 +41,21 @@ dotenv.config();
 
 app.use(express.json());
 
+const allowedOrigins = [
+  'https://project-management-dashboard-iplr.onrender.com',
+  'http://localhost:5173',
+];
+
 const corsOptions = {
-  origin: 'https://project-management-dashboard-iplr.onrender.com', // Your frontend origin
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // Include cookies or other credentials if necessary
+  credentials: true,
   optionsSuccessStatus: 200,
 };
 

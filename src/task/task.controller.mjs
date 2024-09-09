@@ -18,6 +18,8 @@ export async function getAll(req, res) {
       })
       .lean();
 
+    console.log('tasks', tasks);
+
     return res.status(200).json(tasks);
   } catch (error) {
     console.log('error', error);

@@ -6,6 +6,7 @@
   "main": "index.mjs",
   "scripts": {
     "dev": "cross-env PORT=3333 NODE_ENV=development nodemon index.mjs",
+    "start": "node index.mjs",
     "build": "npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
