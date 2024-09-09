@@ -42,7 +42,7 @@ dotenv.config();
 app.use(express.json());
 
 const allowedOrigins = [
-  'https://project-management-dashboard-iplr.onrender.com',
+  'https://task-master-frontend.web.app',
   'http://localhost:5173',
 ];
 
