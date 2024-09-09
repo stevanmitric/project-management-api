@@ -66,5 +66,5 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/api', userRoutes, projectRoutes, taskRoutes, clientRoutes);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.resolve('dist', 'index.html'));
 });
