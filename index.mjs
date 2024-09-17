@@ -6,6 +6,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import clientRoutes from './src/client/client.routes.mjs';
 import { connectDb } from './src/config/database.mjs';
+import inviteRoutes from './src/invite/invite.routes.mjs';
 import projectRoutes from './src/project/project.routes.mjs';
 import taskRoutes from './src/task/task.routes.mjs';
 import userRoutes from './src/user/user.routes.mjs';
@@ -63,7 +64,14 @@ app.use(cors(corsOptions));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-app.use('/api', userRoutes, projectRoutes, taskRoutes, clientRoutes);
+app.use(
+  '/api',
+  userRoutes,
+  projectRoutes,
+  taskRoutes,
+  clientRoutes,
+  inviteRoutes
+);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist', 'index.html'));
