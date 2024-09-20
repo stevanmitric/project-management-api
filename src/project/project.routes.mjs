@@ -1,4 +1,5 @@
 import express from 'express';
+import { permit } from '../middleware/role_check.mjs';
 import {
   deleteById,
   getAll,
@@ -7,16 +8,18 @@ import {
   update,
 } from './project.controller.mjs';
 
-import { verifyToken } from '../middleware/authentication.mjs';
-
 const router = express.Router();
 
-router.use(verifyToken);
+router.route('/project').post(permit(['admin', 'manager']), post);
 
-router.route('/project').post(post);
+router
+  .route('/projects')
+  .get(permit(['admin', 'manager', 'developer']), getAll);
 
-router.route('/projects').get(getAll);
-
-router.route('/project/:id').get(getById).put(update).delete(deleteById);
+router
+  .route('/project/:id')
+  .get(permit(['admin', 'manager', 'developer']), getById)
+  .put(permit(['admin', 'manager', 'developer']), update)
+  .delete(permit(['admin', 'manager']), deleteById);
 
 export default router;

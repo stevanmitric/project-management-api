@@ -16,13 +16,14 @@ export async function getAll(req, res) {
         path: 'reporter',
         model: 'User',
       })
+      .sort(sorter)
+      .skip(skip)
+      .select(select)
       .lean();
-
-    console.log('tasks', tasks);
 
     return res.status(200).json(tasks);
   } catch (error) {
-    console.log('error', error);
+    console.error('error', error);
 
     return res.status(500).json({ message: error });
   }
@@ -99,7 +100,7 @@ export async function update(req, res) {
 
     return res.status(200).json({ message: 'Task updated successfully.' });
   } catch (error) {
-    console.log('error task update', error);
+    console.error('error task update', error);
 
     return res.status(500).json({ message: error });
   }
@@ -157,6 +158,8 @@ export async function deleteListById(req, res) {
     if (!id || id.length !== 24) {
       return res.status(401).json({ message: 'Wrong id format.' });
     }
+
+    await Task.deleteMany({ listId: id });
 
     await TaskList.deleteOne({ _id: id });
 

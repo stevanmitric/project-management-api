@@ -1,15 +1,12 @@
-import nodemailer from 'nodemailer';
-import mg from 'nodemailer-mailgun-transport';
+import formData from 'form-data';
+import Mailgun from 'mailgun.js';
 import { Invite } from './model/invite.model.mjs';
-const auth = {
-  auth: {
-    api_key: process.env.MAILGUN_API_KEY,
-    domain: process.env.MAILGUN_DOMAIN,
-  },
-  host: process.env.MAILGUN_HOST,
-};
 
-const nodemailerMailgun = nodemailer.createTransport(mg(auth));
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({
+  username: 'api',
+  key: process.env.MAILGUN_API_KEY || 'key-yourkeyhere',
+});
 
 export async function getAll(req, res) {
   try {
@@ -26,16 +23,13 @@ export async function sendInvite(req, res) {
   try {
     const { email } = req.body;
 
-    console.log('req', email);
-
-    const message = {
+    mg.messages.create(process.env.MAILGUN_DOMAIN, {
       from: process.env.MAILGUN_FROM,
       to: email,
-      subject: 'Task master invite',
-      text: 'test',
-    };
-
-    await nodemailerMailgun.sendMail(message);
+      subject: 'Hello',
+      text: 'Testing some Mailgun awesomeness!',
+      html: '<h1>Testing some Mailgun awesomeness!</h1>',
+    });
 
     return res.status(200).json({ message: 'Invite sent successfully.' });
   } catch (error) {

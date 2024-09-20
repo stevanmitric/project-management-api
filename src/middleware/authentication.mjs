@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 export const generateToken = user => {
   // Sign a new token with the user's id and email, using the secret key from environment variables
   return jwt.sign(
-    { id: user.id, email: user.email },
+    { user },
     `${process.env.JWT_SECRET_KEY}`,
     { expiresIn: '24h' } // Token will expire in 24 hour
   );
@@ -14,6 +14,10 @@ export const generateToken = user => {
 
 // Middleware function to verify the JWT token in a request
 export const verifyToken = (req, res, next) => {
+  if (req.path === '/api/login' || req.path === '/api/register') {
+    return next(); // Bypass token verification for these routes
+  }
+
   // Get the token from the authorization header
   const token = req.header('Authorization')?.split(' ')[1];
 
@@ -25,7 +29,7 @@ export const verifyToken = (req, res, next) => {
     const decoded = jwt.verify(token, `${process.env.JWT_SECRET_KEY}`);
 
     // Attach the user's id to the request object for use in later middleware/routes
-    req.userId = decoded.id;
+    req.user = decoded.user;
 
     // Proceed to the next middleware or route handler
     next();

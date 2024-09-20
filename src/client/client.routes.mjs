@@ -1,9 +1,8 @@
 import express from 'express';
-import { verifyToken } from '../middleware/authentication.mjs';
 import { getAll, getById, post, remove, update } from './client.controller.mjs';
 const router = express.Router();
 
-router.use(verifyToken);
+// router.use(permit(['admin', 'manager']));
 
 router.route('/clients').post(post).get(getAll);
 

@@ -20,14 +20,14 @@ export async function login(req, res) {
 
     const token = generateToken(user);
 
-    req.user = user;
-
     return res.status(200).json({
       message: 'Auth successful',
       token: token,
       user: user,
     });
   } catch (error) {
+    console.error('err', error);
+
     return res.status(500).json({ message: error });
   }
 }

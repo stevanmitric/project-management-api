@@ -7,6 +7,8 @@ import swaggerUi from 'swagger-ui-express';
 import clientRoutes from './src/client/client.routes.mjs';
 import { connectDb } from './src/config/database.mjs';
 import inviteRoutes from './src/invite/invite.routes.mjs';
+import authRoutes from './src/middleware/auth.routes.mjs';
+import { verifyToken } from './src/middleware/authentication.mjs';
 import projectRoutes from './src/project/project.routes.mjs';
 import taskRoutes from './src/task/task.routes.mjs';
 import userRoutes from './src/user/user.routes.mjs';
@@ -64,13 +66,16 @@ app.use(cors(corsOptions));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
+app.use(verifyToken);
+
 app.use(
   '/api',
   userRoutes,
   projectRoutes,
   taskRoutes,
   clientRoutes,
-  inviteRoutes
+  inviteRoutes,
+  authRoutes
 );
 
 app.get('*', (req, res) => {

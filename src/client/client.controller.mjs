@@ -44,7 +44,7 @@ export async function post(req, res) {
 
     return res.status(201).json({ message: 'Client created successfully.' });
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     return res.status(500).json({ message: error });
   }

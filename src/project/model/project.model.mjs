@@ -19,6 +19,12 @@ const projectSchema = new Schema(
       ],
       default: 'softwareProject',
     },
+    developers: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,

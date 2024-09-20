@@ -10,11 +10,7 @@ import {
   update,
 } from './task.controller.mjs';
 
-import { verifyToken } from '../middleware/authentication.mjs';
-
 const router = express.Router();
-
-router.use(verifyToken);
 
 router.route('/tasks').get(getAll).post(post);
 
